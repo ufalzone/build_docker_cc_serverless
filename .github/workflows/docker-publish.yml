@@ -17,7 +17,7 @@ jobs:
     # Les étapes de la tâche
     steps:
       # 1. Récupère le code de votre dépôt
-      - name: Checkout repository
+      - name: checkout
         uses: actions/checkout@v4
 
       # 2. Se connecte à Docker Hub en utilisant les secrets que vous avez créés
