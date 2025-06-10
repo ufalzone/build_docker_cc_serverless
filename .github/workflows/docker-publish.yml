@@ -2,10 +2,10 @@
 name: Publish Docker Image to Docker Hub
 
 # Déclencheur : Ce workflow s'exécute à chaque fois que vous poussez
-# du code sur la branche "main".
+# du code sur la branche "main" ou "master".
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
 
 # Les tâches à exécuter
 jobs:
@@ -13,7 +13,7 @@ jobs:
   build-and-push:
     # La machine virtuelle sur laquelle exécuter la tâche
     runs-on: ubuntu-latest
-
+    environment: cloudschildren_docker
     # Les étapes de la tâche
     steps:
       # 1. Récupère le code de votre dépôt
@@ -32,6 +32,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: ./Dockerfile
           push: true
           # Le nom complet de votre image sur Docker Hub
           tags: cloudschildren/comfyui-pipeline:v2
