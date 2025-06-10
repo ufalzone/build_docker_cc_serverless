@@ -1,0 +1,9 @@
+comfyui:
+    base_path: /opt/ComfyUI/
+    checkpoints: /runpod-volume/checkpoints
+    vae: /runpod-volume/vae
+    loras: /runpod-volume/loras
+    controlnet: /runpod-volume/controlnet
+    ipadapter: /runpod-volume/ipadapter
+    ultralytics: /runpod-volume/ultralytics
+    sam: /runpod-volume/sam 

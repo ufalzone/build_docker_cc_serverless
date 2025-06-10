@@ -1,0 +1,38 @@
+# Nom du workflow qui apparaîtra dans l'onglet "Actions" de GitHub
+name: Publish Docker Image to Docker Hub
+
+# Déclencheur : Ce workflow s'exécute à chaque fois que vous poussez
+# du code sur la branche "main".
+on:
+  push:
+    branches: [ "main" ]
+
+# Les tâches à exécuter
+jobs:
+  # Nom de la tâche (peut être ce que vous voulez)
+  build-and-push:
+    # La machine virtuelle sur laquelle exécuter la tâche
+    runs-on: ubuntu-latest
+
+    # Les étapes de la tâche
+    steps:
+      # 1. Récupère le code de votre dépôt
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Se connecte à Docker Hub en utilisant les secrets que vous avez créés
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 3. Construit l'image Docker et la pousse sur Docker Hub
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          # Le nom complet de votre image sur Docker Hub
+          tags: cloudschildren/comfyui-pipeline:v2
+
