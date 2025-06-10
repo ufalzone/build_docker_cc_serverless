@@ -53,7 +53,7 @@ RUN python -m pip install --no-cache-dir -U pip setuptools wheel
 RUN python -m pip install --no-cache-dir \
     insightface==0.7.3 \
     "xformers==0.0.28.post1" \
-    onnxruntime-gpu \
+    "onnxruntime-gpu-cu12==1.18.1" \
     onnx \
     opencv-python-headless \
     "timm>=0.9.12" \
