@@ -48,27 +48,37 @@ RUN python -m pip install --no-cache-dir -U pip setuptools wheel
 ########################################################
 # 5) libs GPU sensibles – versions compatibles cu 12.4 #
 ########################################################
-# insightface 0.7.3 : a wheel cp311-cu124 dispo
-# xformers 0.0.28.post1 : wheel cp311-cu124, requires torch 2.4.1
+# On installe les paquets par petits groupes pour mieux
+# identifier les erreurs de compilation ou de dépendances.
+
+# xformers (très dépendant de la version de torch)
+RUN python -m pip install --no-cache-dir "xformers==0.0.28.post1"
+
+# onnxruntime (pour l'inférence ONNX sur GPU)
+RUN python -m pip install --no-cache-dir "onnxruntime-gpu-cu12==1.18.1" onnx
+
+# bitsandbytes (pour la quantification, souvent source d'erreurs de compilation)
+RUN python -m pip install --no-cache-dir bitsandbytes
+
+# insightface et ses dépendances directes
+RUN python -m pip install --no-cache-dir insightface==0.7.3 opencv-python-headless facexlib
+
+# Écosystème Hugging Face
 RUN python -m pip install --no-cache-dir \
-    insightface==0.7.3 \
-    "xformers==0.0.28.post1" \
-    "onnxruntime-gpu-cu12==1.18.1" \
-    onnx \
-    opencv-python-headless \
-    "timm>=0.9.12" \
-    facexlib \
-    ultralytics \
-    kornia \
     accelerate \
     "diffusers>=0.27" \
     "transformers>=4.39" \
     safetensors \
+    peft \
+    sentencepiece
+
+# Autres bibliothèques de deep learning
+RUN python -m pip install --no-cache-dir \
+    "timm>=0.9.12" \
+    ultralytics \
+    kornia \
     einops \
-    pytorch_lightning \
-    bitsandbytes \
-    sentencepiece \
-    peft
+    pytorch_lightning
 
 # Uninstall torchaudio to prevent startup crash from version mismatch
 RUN python -m pip uninstall -y torchaudio
