@@ -12,7 +12,7 @@ jobs:
   # Nom de la tâche (peut être ce que vous voulez)
   build-and-push:
     # La machine virtuelle sur laquelle exécuter la tâche
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, runpod]
     environment: cloudschildren_docker
     # Les étapes de la tâche
     steps:

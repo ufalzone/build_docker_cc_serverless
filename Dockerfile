@@ -5,10 +5,9 @@
 #     template de RunPod (même tagging que la variante "-base")
 FROM runpod/worker-comfyui:5.1.0-base
 
-# 1) dépendances système – ajout python3.11-dev pour correspondre à l'environnement
+# 1) dépendances système – install headers Python + libs système
 RUN apt-get update && \
-    # On installe les headers de dev pour Python 3.11, la version utilisée dans l'image de base.
-    apt-get install -y --no-install-recommends python3.11-dev && \
+    apt-get install -y --no-install-recommends python3-dev && \
     apt-get install -y --no-install-recommends \
         libgl1 libglib2.0-0 libsm6 libxext6 libxrender1 ffmpeg \
         build-essential cmake pkg-config && \
